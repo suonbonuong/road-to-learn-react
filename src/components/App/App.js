@@ -21,15 +21,33 @@ const list = [
 ];
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list,
+    };
+  }
+
+  onDismiss = (_objectID) => {
+    this.setState({
+      list: this.state.list.filter((item) => item.objectID !== _objectID),
+    });
+  };
+
   render() {
     return (
       <div>
-        {list.map((item) => (
-          <div>
+        {this.state.list.map((item) => (
+          <div key={item.url}>
             <a href={item.url}>"Click zo"</a>
             <div>Author: {item.author}</div>
             <div>Title: {item.title}</div>
-            <div>points: {item.points}</div>
+            <div>points: {item.objectID}</div>
+            <span>
+              <button onClick={() => this.onDismiss(item.objectID)} type="button">
+                Xoa di!
+              </button>
+            </span>
             <br></br>
           </div>
         ))}
